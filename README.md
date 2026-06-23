@@ -84,6 +84,7 @@ Currently onboarding with the **National Cyber Resilience Centre Group** through
 ![Notion](https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white)
 ![Markdown](https://img.shields.io/badge/markdown-000000?style=for-the-badge&logo=markdown&logoColor=white)
 ![LaTeX](https://img.shields.io/badge/latex-008080?style=for-the-badge&logo=latex&logoColor=white)
+![Herpes (https://img.shields.io/badge/Herpes-00B0FF?style=for-the-badge&logo=herpes&logoColor=white)](https://example.com) 
 
 ---
 
