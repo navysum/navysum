@@ -65,7 +65,7 @@ Currently onboarding with the **National Cyber Resilience Centre Group** through
 ![Bash](https://img.shields.io/badge/Shell_Script-121011?style=for-the-badge&logo=gnu-bash&logoColor=white)
 ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=powershell&logoColor=white)
 ![Windows Terminal](https://img.shields.io/badge/Windows_Terminal-4D4D4D?style=for-the-badge&logo=windows-terminal&logoColor=white)
-[![Hetzner](https://img.shields.io/badge/Hetzner-D30428?logo=Hetzner&logoColor=white)](#)
+![Hetzner](https://img.shields.io/badge/Hetzner-D30428?logo=Hetzner&logoColor=white)
 
 
 ### Data, Web & Backend
@@ -77,7 +77,7 @@ Currently onboarding with the **National Cyber Resilience Centre Group** through
 ![NumPy](https://img.shields.io/badge/numpy-013243?style=for-the-badge&logo=numpy&logoColor=white)
 ![Pandas](https://img.shields.io/badge/pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
 ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=for-the-badge)
-[![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?logo=vercel&logoColor=white)](#)
+![Vercel](https://img.shields.io/badge/Vercel-%23000000.svg?logo=vercel&logoColor=white)
 
 ### Tools & Workflow
 
