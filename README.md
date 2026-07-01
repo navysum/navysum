@@ -103,16 +103,9 @@ Currently onboarding with the **National Cyber Resilience Centre Group** through
 ---
 
 ## 📊 GitHub Stats
-
-![Craig's GitHub Stats](https://github-readme-stats-xi-eight-76.vercel.app/api?username=navysum&show_icons=true&theme=tokyonight&v=2)
-
-![Top Languages](https://github-readme-stats-xi-eight-76.vercel.app/api/top-langs/?username=navysum&layout=compact&theme=tokyonight&v=2)
-
-
 ![Craig's GitHub Stats](https://github-readme-stats-xi-eight-76.vercel.app/api?username=navysum&show_icons=true&theme=tokyonight&hide_border=true&v=2)
 
 ![Top Languages](https://github-readme-stats-xi-eight-76.vercel.app/api/top-langs/?username=navysum&layout=compact&theme=tokyonight&hide_border=true&langs_count=8&v=2)
-
 ---
 
 ## 🤝 Connect
