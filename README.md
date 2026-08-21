@@ -12,7 +12,7 @@ Currently onboarding with the **National Cyber Resilience Centre Group** through
 
 ## 🔭 Current Focus
 
-- 🛡 Building my [SOC in a Box](https://github.com/navysum/soc-in-a-box)
+- 🛡 Building my [Hermes Agent Infrastructure]([https://github.com/navysum/soc-in-a-box](https://github.com/navysum/hermes-agent-infrastructure))
 - 🔍 Learning network security, log analysis, threat detection, and defensive tooling
 - 🧠 Practising hands-on security through TryHackMe, HackTheBox, and CTF-style labs
 - 🤖 Building agentic automation systems for productivity, research, and monitoring
