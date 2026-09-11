@@ -12,7 +12,7 @@ Currently onboarding with the **National Cyber Resilience Centre Group** through
 
 ## 🔭 Current Focus
 
-- 🛡 Building my [Hermes Agent Infrastructure]([https://github.com/navysum/soc-in-a-box](https://github.com/navysum/hermes-agent-infrastructure))
+- 🛡 Building my [Hermes Agent Infrastructure](https://github.com/navysum/hermes-agent-infrastructure)
 - 🔍 Learning network security, log analysis, threat detection, and defensive tooling
 - 🧠 Practising hands-on security through TryHackMe, HackTheBox, and CTF-style labs
 - 🤖 Building agentic automation systems for productivity, research, and monitoring
@@ -36,13 +36,6 @@ Currently onboarding with the **National Cyber Resilience Centre Group** through
 - Monitoring dashboards
 - Research assistants and alerting systems
 - API integrations and scheduled automations
-
-### Data & Trading Research
-- RSI / Bollinger Band strategy tooling
-- Backtesting experiments
-- Risk and position-sizing analysis
-- Quantitative research scripts
-- Dashboard-based monitoring
 
 ---
 
@@ -103,9 +96,10 @@ Currently onboarding with the **National Cyber Resilience Centre Group** through
 ---
 
 ## 📊 GitHub Stats
-![Craig's GitHub Stats](https://github-readme-stats-xi-eight-76.vercel.app/api?username=navysum&show_icons=true&theme=tokyonight&hide_border=true&v=2)
 
-![Top Languages](https://github-readme-stats-xi-eight-76.vercel.app/api/top-langs/?username=navysum&layout=compact&theme=tokyonight&hide_border=true&langs_count=8&v=2)
+![Craig's GitHub Stats](./profile/stats.svg)
+
+![Top Languages](./profile/top-langs.svg)
 ---
 
 ## 🤝 Connect
