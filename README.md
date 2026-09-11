@@ -1,104 +1,115 @@
 # Hi, I'm Craig 👋
 
-### Cybersecurity · AI Systems · Automation · Software Engineering
+### Cybersecurity · Software Engineering · AI Systems · Automation
 
-I build practical systems around **cybersecurity, AI agents, automation, infrastructure, and data**.
+Computer Science student at **City, University of London** building practical software across cybersecurity, AI infrastructure, full-stack applications, automation, and data.
 
-A lot of my work focuses on connecting different tools and services into systems that can actually run continuously — from full-stack applications and personal AI infrastructure to security tooling, dashboards, and quantitative research.
+I'm particularly interested in roles involving:
+
+**Cybersecurity Engineering · Software Engineering · AI/Automation · Infrastructure**
 
 Currently involved with the **National Cyber Resilience Centre Group** through the **Cyber PATH** programme.
 
-> Some of my projects are private while they're actively being developed.
+---
+
+## 👨‍💻 About Me
+
+- 🛡 Interested in defensive security, secure systems and infrastructure
+- 🤖 Building self-hosted AI agents and automation workflows
+- 📱 Developing cross-platform applications with React Native and TypeScript
+- 🐧 Running and managing Linux infrastructure and Docker services
+- 📊 Building Python tooling for data analysis and quantitative research
+- 🔐 Interested in authentication, authorisation and secure application design
 
 ---
 
-## 🚀 Currently Building
+# ⭐ Featured Project
 
-| Project | What I'm Building | Stack | Status |
-|---|---|---|---|
-| [**StreakMates**](https://github.com/navysum/StreakMates) | Social habit tracker built around accountability with friends, shared habits, groups, realtime leaderboards and offline check-ins. [Live App ↗](https://streak-mates.vercel.app) | React Native · Expo · TypeScript · Supabase · PostgreSQL | 🟢 Public |
-| **LifeOS** | Personal operating system bringing tasks, habits, health, finance, personal data and system monitoring into one dashboard. | React · TypeScript · Python · APIs | 🔒 Private |
-| [**Hermes Agent Infrastructure**](https://github.com/navysum/hermes-agent-infrastructure) | Self-hosted infrastructure for persistent AI agents, automation, research and personal workflows. | Python · Linux · Docker · APIs | 🟢 Active |
-| **Trading Research** | Backtesting, strategy research, market analysis and quantitative tooling. | Python · Pandas · NumPy | 🔒 Private |
+## [StreakMates](https://github.com/navysum/StreakMates)
 
----
+**A social habit tracker built around accountability with friends.**
 
-## ⭐ Featured Project — StreakMates
+[![Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/navysum/StreakMates)
+[![Live App](https://img.shields.io/badge/Live-App-000000?style=for-the-badge&logo=vercel)](https://streak-mates.vercel.app)
 
-[![StreakMates](https://img.shields.io/badge/GitHub-StreakMates-181717?style=for-the-badge&logo=github)](https://github.com/navysum/StreakMates)
-[![Live App](https://img.shields.io/badge/Live_App-Open-000000?style=for-the-badge&logo=vercel)](https://streak-mates.vercel.app)
+**React Native · Expo · TypeScript · Supabase · PostgreSQL**
 
-**Better together.**
+StreakMates supports private and shared habits, groups, realtime activity, leaderboards, offline check-ins and cross-platform deployment across **iOS, Android and Web**.
 
-StreakMates is a habit tracker built around the people you're doing it with.
+### Engineering highlights
 
-Unlike traditional habit trackers where progress is completely private, StreakMates allows habits to belong to groups so friends can hold each other accountable.
-
-### Some of the engineering behind it
-
-- 🔐 PostgreSQL Row Level Security for database-level authorisation
-- 👥 Private and shared habits
-- ⚡ Supabase Realtime group activity
-- 📱 One codebase across iOS, Android and Web
-- 📴 Offline-first check-ins with queued synchronisation
-- 🏆 Consistency-based group leaderboards
+- 🔐 PostgreSQL **Row Level Security** for database-level authorisation
+- 🧪 Security attack suite testing access from multiple user roles
+- 📴 Offline-first architecture with queued and replayed check-ins
+- ⚡ Supabase Realtime updates
 - 🔑 Google OAuth with PKCE
-- 🧪 Unit, security and browser-level testing
-- 🎨 Light and dark design systems with automated contrast testing
+- 📊 Fairness-aware leaderboard algorithms
+- 🎨 Tested light/dark design system and accessibility rules
+- 📱 Single React Native / Expo codebase for mobile and web
+- ✅ Automated unit, security and browser testing
 
-[**View the repository →**](https://github.com/navysum/StreakMates) · [**Try StreakMates →**](https://streak-mates.vercel.app)
+[View the code →](https://github.com/navysum/StreakMates)
 
 ---
 
-## 🧠 What I'm Exploring
+# 🚀 Current Projects
 
-### 🤖 AI & Agent Systems
+| Project | Description | Technologies |
+|---|---|---|
+| [**StreakMates**](https://github.com/navysum/StreakMates) | Social habit tracking and accountability platform | React Native · Expo · TypeScript · Supabase · PostgreSQL |
+| **LifeOS** 🔒 | Personal dashboard connecting tasks, habits, finance, health and system data | React · TypeScript · Python · APIs |
+| [**Hermes Agent Infrastructure**](https://github.com/navysum/hermes-agent-infrastructure) | Infrastructure for persistent AI agents, automation and research workflows | Python · Linux · Docker · APIs |
+| **Trading Research** 🔒 | Backtesting, strategy analysis and quantitative research tooling | Python · Pandas · NumPy |
 
-Building and experimenting with:
+> 🔒 Some projects remain private while they are actively being developed.
 
-- Self-hosted AI agent infrastructure
-- Multi-agent workflows
-- Persistent personal automation
-- Tool and API integrations
-- Local and cloud-hosted LLMs
-- Automated monitoring and research systems
+---
 
-### 🛡 Cybersecurity
+# 🧠 Technical Skills
 
-Working on:
+### Software Engineering
 
-- Defensive security tooling
-- Network analysis
-- Log analysis and detection
-- Security automation
+- Cross-platform application development
+- REST API integration
 - Authentication and authorisation
-- Linux and infrastructure security
+- Offline-first application design
+- Database design
+- Testing and debugging
+- Git-based development workflows
 
-### ⚙️ Systems & Infrastructure
+### Cybersecurity
 
-I enjoy taking individual tools and turning them into larger connected systems:
+- Defensive security
+- Network analysis
+- Linux security
+- Log analysis
+- Access-control design
+- PostgreSQL Row Level Security
+- Security testing
+- CTF and lab environments
 
-- Linux VPS infrastructure
-- Dockerised services
+### AI & Automation
+
+- AI agent infrastructure
+- Multi-agent workflows
+- LLM integrations
+- API-driven automation
+- Scheduled workflows
+- Self-hosted AI systems
+- Monitoring and research automation
+
+### Infrastructure
+
+- Linux VPS administration
+- Docker
+- Self-hosted services
 - API integrations
-- Scheduled automation
-- Personal data pipelines
-- Dashboards and monitoring
-
-### 📊 Data & Quantitative Research
-
-Experimenting with:
-
-- Trading strategy research
-- Backtesting
-- Risk analysis
-- Data pipelines
-- Python-based analysis
-- Dashboard-driven monitoring
+- Deployment and monitoring
+- Hetzner cloud infrastructure
 
 ---
 
-## 🛠 Tech Stack
+# 🛠 Tech Stack
 
 ### Languages
 
@@ -108,16 +119,14 @@ Experimenting with:
 ![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=cplusplus&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 
-### App & Web Development
+### Application Development
 
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
 
 ### Infrastructure & Security
 
@@ -137,29 +146,16 @@ Experimenting with:
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
 ![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
 
-### Tools & Workflow
+### Tools
 
 ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 ![Obsidian](https://img.shields.io/badge/Obsidian-7C3AED?style=for-the-badge&logo=obsidian&logoColor=white)
-![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)
 ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
 
 ---
 
-## 📌 Core Areas
-
-| Area | What I'm Working On |
-|---|---|
-| 🛡 **Cybersecurity** | Defensive tooling, database security, network analysis and security automation |
-| 🤖 **AI Agents** | Persistent agents, personal automation, research workflows and tool integrations |
-| ⚙️ **Infrastructure** | Linux servers, Docker, self-hosting, APIs and monitoring |
-| 📱 **Software Engineering** | Cross-platform applications, offline-first systems and full-stack development |
-| 📊 **Data** | Trading research, backtesting, dashboards and quantitative tooling |
-
----
-
-## 📊 GitHub Activity
+# 📊 GitHub Activity
 
 ![Craig's GitHub Stats](./profile/stats.svg)
 
@@ -167,11 +163,7 @@ Experimenting with:
 
 ---
 
-## 🤝 Connect
+# 🤝 Connect
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Craig_Ataide-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/craigataide/)
 [![GitHub](https://img.shields.io/badge/GitHub-navysum-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/navysum)
-
----
-
-> *"The quieter you become, the more you are able to hear."*
