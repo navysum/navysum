@@ -8,6 +8,7 @@ import { renderGallery } from "./gallery";
 import { renderList } from "./list";
 import { renderCalendar } from "./calendar";
 import { formatValue } from "../db/value";
+import { PropertyModal } from "../ui/propertyModal";
 
 /** Per-block UI state that should survive a re-render but not be persisted. */
 interface BlockState {
@@ -145,6 +146,15 @@ function renderToolbar(
 					})
 			);
 		}
+		menu.addSeparator();
+		menu.addItem((item) =>
+			item
+				.setTitle("New property…")
+				.setIcon("plus")
+				.onClick(() => {
+					new PropertyModal(ctx.app, ctx.store, ctx.schema, null, () => ctx.refresh()).open();
+				})
+		);
 		menu.showAtMouseEvent(evt);
 	});
 

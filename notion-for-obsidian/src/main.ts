@@ -25,6 +25,7 @@ import {
 	NewDatabaseModal,
 	NewRowModal,
 } from "./ui/modals";
+import { PropertyModal } from "./ui/propertyModal";
 import { DatabaseSchema } from "./types";
 
 export default class NotionForObsidian extends Plugin {
@@ -173,6 +174,16 @@ export default class NotionForObsidian extends Plugin {
 					new NewRowModal(this.app, this.store, schema, (file) => {
 						void this.app.workspace.getLeaf(false).openFile(file);
 					}).open();
+				});
+			},
+		});
+
+		this.addCommand({
+			id: "add-property",
+			name: "Add a property to a database",
+			callback: () => {
+				this.pickDatabase((schema) => {
+					new PropertyModal(this.app, this.store, schema, null, () => this.store.invalidate()).open();
 				});
 			},
 		});

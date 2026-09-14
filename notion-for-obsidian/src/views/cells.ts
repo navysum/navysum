@@ -5,7 +5,7 @@ import { autoColor, pill } from "../utils/dom";
 import { formatDate, toISODate } from "../utils/dates";
 import { ViewContext, openRow } from "./context";
 
-const READ_ONLY: string[] = ["formula", "created", "updated"];
+const READ_ONLY: string[] = ["formula", "rollup", "created", "updated"];
 
 /**
  * Render one property value as an editable control.
