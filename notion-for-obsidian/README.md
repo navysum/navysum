@@ -18,7 +18,7 @@ normal `.md` file you can open in any editor.
 4. [The slash menu](#4-the-slash-menu)
 5. [Database views](#5-database-views)
 6. [Filtering and sorting](#6-filtering-and-sorting)
-7. [Property types](#7-property-types)
+7. [Property types, relations and rollups](#7-property-types-relations-and-rollups)
 8. [Charts](#8-charts)
 9. [Columns](#9-columns)
 10. [Coming from Notion](#10-coming-from-notion)
@@ -283,7 +283,7 @@ sort:
 
 ---
 
-## 7. Property types
+## 7. Property types, relations and rollups
 
 | Type | Stored as | Editing |
 | --- | --- | --- |
@@ -297,8 +297,90 @@ sort:
 | `person` | a list of names | click to tick several |
 | `files` | a path or URL | used as the cover image in gallery and board |
 | `relation` | a list of note titles | click to link rows in another database |
+| `rollup` | computed | read-only, see below |
 | `formula` | computed | read-only, see below |
 | `created` / `updated` | from the file itself | read-only |
+
+### Relations and rollups
+
+This is the pair that makes a set of databases behave like one system, and it's
+worth setting up once slowly so you see how the two halves fit.
+
+A **relation** links a row to rows in another database. A **rollup** reaches
+through that link and does maths on what it finds. Relations alone just give you
+clickable links; rollups are what turn them into numbers.
+
+**Worked example — Projects that total up their Tasks.**
+
+Say you have a `Tasks` database with an `Hours` number property and a `Done`
+checkbox, and a `Projects` database. You want each project to show its total
+hours and how far along it is.
+
+**Step 1 — add the relation.** Open a view of `Projects`, click **Properties →
+New property…**. Name it `Tasks`, set the type to **Relation**, and choose
+`Tasks` as the related database. Save.
+
+You now have a Tasks cell on every project. Click one and tick the tasks that
+belong to that project. Behind the scenes this writes a plain list of note
+titles into the project's frontmatter:
+
+```yaml
+tasks:
+  - Design the homepage
+  - Build the homepage
+```
+
+**Step 2 — add the rollup.** **Properties → New property…** again. Name it
+`Total hours`, type **Rollup**. Now three dropdowns appear, and they read as a
+sentence:
+
+- **Relation** → `Tasks` — *which link to follow*
+- **Property** → `Hours` — *what to grab off each related row*
+- **Calculate** → `Sum` — *how to squash those into one number*
+
+Save. Every project now shows the total hours of its tasks, and it updates the
+moment you change an hour count on any task.
+
+**Step 3 — try a different calculation.** Add another rollup called `Progress`,
+same relation, property `Done`, calculate **Percent checked**. That's a live
+completion percentage per project, computed from the task notes themselves.
+
+### What you can calculate
+
+| Group | Functions |
+| --- | --- |
+| Show | `Show original` — lists the values rather than reducing them |
+| Count | `Count all` (related rows), `Count values`, `Count unique values`, `Count empty`, `Count not empty`, `Percent empty`, `Percent not empty` |
+| Numbers | `Sum`, `Average`, `Median`, `Min`, `Max`, `Range` |
+| Dates | `Earliest date`, `Latest date`, `Date range (days)` |
+| Checkboxes | `Checked`, `Unchecked`, `Percent checked`, `Percent unchecked` |
+
+Two distinctions that trip people up:
+
+- **`Count all` vs `Count values`** — `Count all` counts related *rows*. `Count
+  values` counts the *values gathered*, which is larger when the property you're
+  rolling up is a multi-select. Rolling up a `Tags` multi-select across 3 rows
+  that carry 7 tags between them gives `Count all: 3`, `Count values: 7`.
+- **Empty rows still count.** `Percent checked` divides by every gathered value,
+  including unset ones, so a task with no `Done` value drags the percentage down
+  rather than being ignored.
+
+### Things worth knowing
+
+- **Rollups are read-only.** They're computed when a view renders and never
+  written to your notes, so nothing is duplicated and nothing can drift.
+- **Rollups can feed formulas.** Rollups resolve first, so a formula like
+  `{Total hours} * {Rate}` works and gives you a live project cost.
+- **You can roll up a rollup.** The far side's rollups resolve before this one
+  reads them.
+- **Circular rollups won't hang.** If Projects rolls up Tasks and Tasks rolls
+  back up into Projects, that has no stable answer — every value depends on
+  itself. Rather than spinning forever, resolution stops after one level and
+  those results aren't cached. You'll get a number, but treat it as approximate;
+  it's better to avoid the loop.
+- **Matching is by note title**, case-insensitive, and `[[Wikilinks]]`,
+  `[[Links|with aliases]]` and bare text all work. If two notes in the target
+  database share a title, the first one found wins.
 
 ### Formulas
 
@@ -337,7 +419,7 @@ title: Where my tasks are
 | `group` | The property whose values become bars or slices. Required. |
 | `chart` | `column`, `bar`, `line`, `area`, `pie`, `donut`, `scatter`. Default `column`. |
 | `aggregate` | `count`, `sum`, `average`, `median`, `min`, `max`, `count_unique`, `percent_checked`. |
-| `value` | Which numeric property to aggregate. Not needed for `count`. |
+| `value` | Which numeric property to aggregate. Not needed for `count`. A rollup counts as numeric here. |
 | `series` | Split into multiple coloured series by a second property. |
 | `stacked` | `true` to stack the series instead of placing them side by side. |
 | `filter` | Same syntax as a view's filter. |
@@ -439,8 +521,8 @@ title, page content, and nested pages.
 **What differs, honestly:**
 
 - **Formulas** are arithmetic only. Notion's `if()`, `dateBetween()` and string functions
-  aren't here.
-- **Rollups** don't exist yet. Relations link rows, but don't aggregate across them.
+  aren't here. Rollups, though, are fully supported — see
+  [Relations and rollups](#relations-and-rollups).
 - **Permissions, comments and sharing** are Notion-server features with no local
   equivalent.
 - **Sub-items and dependencies** aren't modelled as first-class features.

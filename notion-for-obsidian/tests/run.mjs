@@ -10,20 +10,23 @@ import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const outDir = path.join(here, ".build");
-const outFile = path.join(outDir, "logic.test.cjs");
 mkdirSync(outDir, { recursive: true });
 
+const suites = ["logic", "rollup"];
+const outFiles = suites.map((name) => path.join(outDir, `${name}.test.cjs`));
+
 await esbuild.build({
-	entryPoints: [path.join(here, "logic.test.ts")],
+	entryPoints: suites.map((name) => path.join(here, `${name}.test.ts`)),
+	outdir: outDir,
+	outExtension: { ".js": ".cjs" },
 	bundle: true,
 	platform: "node",
 	format: "cjs",
 	target: "node18",
-	outfile: outFile,
 	external: ["node:test", "node:assert/strict"],
 	alias: { obsidian: path.join(here, "obsidian-stub.ts") },
 	logLevel: "warning",
 });
 
-const result = spawnSync(process.execPath, ["--test", outFile], { stdio: "inherit" });
+const result = spawnSync(process.execPath, ["--test", ...outFiles], { stdio: "inherit" });
 process.exit(result.status ?? 1);

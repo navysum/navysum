@@ -20,6 +20,7 @@ export type PropertyType =
 	| "person"
 	| "files"
 	| "relation"
+	| "rollup"
 	| "formula"
 	| "created"
 	| "updated";
@@ -37,6 +38,7 @@ export const PROPERTY_TYPES: PropertyType[] = [
 	"person",
 	"files",
 	"relation",
+	"rollup",
 	"formula",
 	"created",
 	"updated",
@@ -55,6 +57,7 @@ export const PROPERTY_TYPE_LABELS: Record<PropertyType, string> = {
 	person: "Person",
 	files: "Files & media",
 	relation: "Relation",
+	rollup: "Rollup",
 	formula: "Formula",
 	created: "Created time",
 	updated: "Last edited time",
@@ -91,6 +94,84 @@ export interface SelectOption {
 	color: OptionColor;
 }
 
+/**
+ * How a rollup collapses the values it gathered from related rows.
+ * Mirrors the calculate menu Notion shows on a rollup property.
+ */
+export type RollupFunction =
+	| "show_original"
+	| "count_all"
+	| "count_values"
+	| "count_unique"
+	| "count_empty"
+	| "count_not_empty"
+	| "percent_empty"
+	| "percent_not_empty"
+	| "sum"
+	| "average"
+	| "median"
+	| "min"
+	| "max"
+	| "range"
+	| "earliest"
+	| "latest"
+	| "date_range"
+	| "checked"
+	| "unchecked"
+	| "percent_checked"
+	| "percent_unchecked";
+
+export const ROLLUP_FUNCTIONS: RollupFunction[] = [
+	"show_original",
+	"count_all",
+	"count_values",
+	"count_unique",
+	"count_empty",
+	"count_not_empty",
+	"percent_empty",
+	"percent_not_empty",
+	"sum",
+	"average",
+	"median",
+	"min",
+	"max",
+	"range",
+	"earliest",
+	"latest",
+	"date_range",
+	"checked",
+	"unchecked",
+	"percent_checked",
+	"percent_unchecked",
+];
+
+export const ROLLUP_FUNCTION_LABELS: Record<RollupFunction, string> = {
+	show_original: "Show original",
+	count_all: "Count all",
+	count_values: "Count values",
+	count_unique: "Count unique values",
+	count_empty: "Count empty",
+	count_not_empty: "Count not empty",
+	percent_empty: "Percent empty",
+	percent_not_empty: "Percent not empty",
+	sum: "Sum",
+	average: "Average",
+	median: "Median",
+	min: "Min",
+	max: "Max",
+	range: "Range",
+	earliest: "Earliest date",
+	latest: "Latest date",
+	date_range: "Date range (days)",
+	checked: "Checked",
+	unchecked: "Unchecked",
+	percent_checked: "Percent checked",
+	percent_unchecked: "Percent unchecked",
+};
+
+/** The property id a rollup uses to mean "the related note's title". */
+export const ROLLUP_TITLE_KEY = "__name__";
+
 export interface PropertyDef {
 	/** The frontmatter key this property reads and writes. */
 	id: string;
@@ -99,6 +180,13 @@ export interface PropertyDef {
 	options?: SelectOption[];
 	/** For `relation`: the id of the database being pointed at. */
 	relationDatabaseId?: string;
+	/** For `rollup`: the relation property *on this database* to follow. */
+	rollupRelation?: string;
+	/** For `rollup`: the property in the related database to gather, or
+	 *  `ROLLUP_TITLE_KEY` to gather the related notes' titles. */
+	rollupProperty?: string;
+	/** For `rollup`: how the gathered values are collapsed into one. */
+	rollupFunction?: RollupFunction;
 	/** For `formula`: a tiny expression evaluated per row. */
 	formula?: string;
 	numberFormat?: "plain" | "percent" | "currency";

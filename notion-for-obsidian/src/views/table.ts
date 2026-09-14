@@ -3,6 +3,7 @@ import { DatabaseRow, PropertyDef, ViewConfig } from "../types";
 import { renderCell } from "./cells";
 import { ViewContext, openRow, rowContextMenu } from "./context";
 import { findProperty } from "../db/query";
+import { PropertyModal } from "../ui/propertyModal";
 
 export function renderTable(
 	container: HTMLElement,
@@ -116,6 +117,14 @@ function propertyMenu(
 	menu.addSeparator();
 	menu.addItem((item) =>
 		item
+			.setTitle("Edit property…")
+			.setIcon("settings-2")
+			.onClick(() => {
+				new PropertyModal(ctx.app, ctx.store, ctx.schema, prop, () => ctx.refresh()).open();
+			})
+	);
+	menu.addItem((item) =>
+		item
 			.setTitle("Hide property")
 			.setIcon("eye-off")
 			.onClick(() => {
@@ -155,6 +164,8 @@ export function iconForType(type: string): string {
 			return "paperclip";
 		case "relation":
 			return "arrow-left-right";
+		case "rollup":
+			return "layers";
 		case "formula":
 			return "sigma";
 		default:

@@ -7,8 +7,12 @@ import {
 	SelectOption,
 	ViewConfig,
 } from "../types";
-import { coerce, evaluateFormula } from "./value";
+import { coerce } from "./value";
+import { RowResolver } from "./resolve";
 import { autoColor } from "../utils/dom";
+
+/** Property types whose value is computed on read and never stored in a note. */
+export const DERIVED_TYPES: PropertyType[] = ["formula", "rollup", "created", "updated"];
 
 export function slugify(input: string): string {
 	return (
@@ -37,8 +41,12 @@ function sanitizeFileName(name: string): string {
  */
 export class DatabaseStore extends Events {
 	private schemas: DatabaseSchema[] = [];
-	private rowCache = new Map<string, { rows: DatabaseRow[]; stamp: number }>();
 	private notifyTimer: number | null = null;
+	/** Fills in rollups and formulas, and keeps cross-database cycles finite. */
+	private resolver = new RowResolver({
+		schema: (id) => this.get(id),
+		baseRows: (schema) => this.baseRows(schema),
+	});
 
 	constructor(private app: App, private persist: () => Promise<void>) {
 		super();
@@ -46,7 +54,7 @@ export class DatabaseStore extends Events {
 
 	load(schemas: DatabaseSchema[]): void {
 		this.schemas = schemas ?? [];
-		this.rowCache.clear();
+		this.resolver.clear();
 	}
 
 	all(): DatabaseSchema[] {
@@ -65,7 +73,7 @@ export class DatabaseStore extends Events {
 
 	/** Invalidate caches and let views know they should redraw. */
 	invalidate(): void {
-		this.rowCache.clear();
+		this.resolver.clear();
 		// Vault events arrive in bursts (a rename touches many files); coalesce them.
 		if (this.notifyTimer !== null) window.clearTimeout(this.notifyTimer);
 		this.notifyTimer = window.setTimeout(() => {
@@ -174,12 +182,12 @@ export class DatabaseStore extends Events {
 		return files;
 	}
 
-	/** Decode every note in the database folder into a row. */
-	rows(schema: DatabaseSchema): DatabaseRow[] {
-		const cached = this.rowCache.get(schema.id);
-		if (cached) return cached.rows;
-
-		const rows = this.folderFiles(schema.folder).map((file) => {
+	/**
+	 * Decode every note in the database folder, without any derived value.
+	 * The resolver layers rollups and formulas on top of this.
+	 */
+	private baseRows(schema: DatabaseSchema): DatabaseRow[] {
+		return this.folderFiles(schema.folder).map((file) => {
 			const frontmatter = this.app.metadataCache.getFileCache(file)?.frontmatter ?? {};
 			const values: Record<string, unknown> = {};
 			for (const prop of schema.properties) {
@@ -187,8 +195,8 @@ export class DatabaseStore extends Events {
 					values[prop.id] = new Date(file.stat.ctime).toISOString().slice(0, 10);
 				} else if (prop.type === "updated") {
 					values[prop.id] = new Date(file.stat.mtime).toISOString().slice(0, 10);
-				} else if (prop.type === "formula") {
-					values[prop.id] = null; // filled in below, once siblings are decoded
+				} else if (prop.type === "formula" || prop.type === "rollup") {
+					values[prop.id] = null; // derived; the resolver fills these in
 				} else {
 					values[prop.id] = coerce(prop, (frontmatter as Record<string, unknown>)[prop.id]);
 				}
@@ -201,20 +209,11 @@ export class DatabaseStore extends Events {
 				mtime: file.stat.mtime,
 			} as DatabaseRow;
 		});
+	}
 
-		const formulas = schema.properties.filter((p) => p.type === "formula");
-		if (formulas.length > 0) {
-			for (const row of rows) {
-				for (const prop of formulas) {
-					row.values[prop.id] = prop.formula
-						? evaluateFormula(prop.formula, row, schema.properties)
-						: null;
-				}
-			}
-		}
-
-		this.rowCache.set(schema.id, { rows, stamp: Date.now() });
-		return rows;
+	/** Every row of a database, with rollups and formulas resolved. */
+	rows(schema: DatabaseSchema): DatabaseRow[] {
+		return this.resolver.rows(schema);
 	}
 
 	getFile(path: string): TFile | null {
@@ -235,7 +234,7 @@ export class DatabaseStore extends Events {
 		if (!file) return;
 		const prop = schema.properties.find((p) => p.id === propertyId);
 		// Computed properties are derived on read; there is nothing to persist.
-		if (prop && ["formula", "created", "updated"].includes(prop.type)) return;
+		if (prop && DERIVED_TYPES.includes(prop.type)) return;
 
 		await this.app.fileManager.processFrontMatter(file, (frontmatter) => {
 			if (value === null || value === undefined || value === "") delete frontmatter[propertyId];
@@ -281,7 +280,7 @@ export class DatabaseStore extends Events {
 			if (value !== undefined && value !== null && value !== "") frontmatter[key] = value;
 		}
 		for (const prop of schema.properties) {
-			if (["formula", "created", "updated"].includes(prop.type)) continue;
+			if (DERIVED_TYPES.includes(prop.type)) continue;
 			if (frontmatter[prop.id] !== undefined) continue;
 			if (prop.type === "checkbox") frontmatter[prop.id] = false;
 			else if (prop.type === "multiselect") frontmatter[prop.id] = [];

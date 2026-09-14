@@ -77,6 +77,8 @@ export function formatValue(prop: PropertyDef, value: unknown): string {
 		case "person":
 		case "relation":
 			return (value as string[]).join(", ");
+		case "rollup":
+			return formatRollup(prop, value);
 		default:
 			return String(value);
 	}
@@ -84,6 +86,23 @@ export function formatValue(prop: PropertyDef, value: unknown): string {
 
 function round(n: number): number {
 	return Math.round(n * 100) / 100;
+}
+
+/**
+ * A rollup's result type depends on its function, not on the property: a sum is
+ * a number, "show original" is a list, and an earliest date is a date string.
+ */
+function formatRollup(prop: PropertyDef, value: unknown): string {
+	if (Array.isArray(value)) return value.join(", ");
+	if (typeof value === "number") {
+		const how = prop.rollupFunction ?? "";
+		if (how.startsWith("percent_")) return `${round(value)}%`;
+		if (how === "date_range") return `${round(value)} days`;
+		if (prop.numberFormat === "currency") return `$${round(value).toLocaleString()}`;
+		return String(round(value));
+	}
+	if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)) return formatDate(value);
+	return String(value);
 }
 
 /** Sort comparator shared by every view and by chart ordering. */
@@ -107,6 +126,17 @@ export function compareValues(prop: PropertyDef, a: unknown, b: unknown): number
 			const db = parseDate(b);
 			if (!da || !db) return 0;
 			return da.getTime() - db.getTime();
+		}
+		case "rollup": {
+			// Most rollups produce numbers; the rest sort as text.
+			if (typeof a === "number" && typeof b === "number") return a - b;
+			if (Array.isArray(a) && Array.isArray(b)) {
+				return a.join(", ").localeCompare(b.join(", "), undefined, { sensitivity: "base" });
+			}
+			return String(a).localeCompare(String(b), undefined, {
+				numeric: true,
+				sensitivity: "base",
+			});
 		}
 		default:
 			return String(a).localeCompare(String(b), undefined, { numeric: true, sensitivity: "base" });
