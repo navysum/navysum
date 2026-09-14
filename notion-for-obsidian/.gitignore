@@ -1,0 +1,5 @@
+node_modules/
+tests/.build/
+*.js.map
+# main.js is intentionally committed: it is the built plugin, and copying it
+# into a vault is how the plugin is installed without a Node toolchain.

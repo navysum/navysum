@@ -1,0 +1,543 @@
+# Notion for Obsidian
+
+Bring the parts of Notion you actually miss into Obsidian: the `/` menu, databases,
+table / board / gallery / list / calendar views, inline property editing, and charts
+built from your own data.
+
+Everything stays plain markdown. There is no lock-in, no sync service, and no
+account. If you uninstall this plugin tomorrow, every note you made is still a
+normal `.md` file you can open in any editor.
+
+---
+
+## Table of contents
+
+1. [The one idea you need first](#1-the-one-idea-you-need-first)
+2. [Installing it](#2-installing-it)
+3. [Your first database, step by step](#3-your-first-database-step-by-step)
+4. [The slash menu](#4-the-slash-menu)
+5. [Database views](#5-database-views)
+6. [Filtering and sorting](#6-filtering-and-sorting)
+7. [Property types](#7-property-types)
+8. [Charts](#8-charts)
+9. [Columns](#9-columns)
+10. [Coming from Notion](#10-coming-from-notion)
+11. [Settings](#11-settings)
+12. [Troubleshooting](#12-troubleshooting)
+13. [Developing](#13-developing)
+
+---
+
+## 1. The one idea you need first
+
+Notion stores your databases on Notion's servers, in a format only Notion understands.
+Obsidian stores everything as markdown files in a folder on your computer.
+
+So this plugin does not invent a new storage format. It reuses what Obsidian already has:
+
+| In Notion | Here |
+| --- | --- |
+| A database | A **folder** |
+| A row / page in that database | A **note** inside that folder |
+| A property on that row | A line of **frontmatter** at the top of that note |
+| A view (board, calendar…) | A small **code block** you paste into any note |
+
+That's the whole model. Once it clicks, everything else follows.
+
+Here's a row. It is just a note:
+
+```markdown
+---
+status: In progress
+priority: 3
+due: 2026-03-14
+tags:
+  - Work
+  - Urgent
+---
+
+Notes about this task go here, like any other Obsidian note.
+```
+
+That block between the `---` lines is **frontmatter**. Obsidian already understands it;
+this plugin gives it a Notion-style interface. When you tick a checkbox or drag a card
+between board columns, the plugin edits those frontmatter lines. Nothing else.
+
+**Why this is worth knowing:** you can always edit a row by hand, in any text editor,
+without the plugin. That is the escape hatch Notion never gave you.
+
+---
+
+## 2. Installing it
+
+This plugin is not in Obsidian's Community Plugins directory, so you install it by
+hand. It takes about two minutes.
+
+**Step 1 — get the files.** Download or clone this repository. The built plugin
+(`main.js`) is committed, so you do **not** need Node.js or a build step just to use it.
+
+If you'd rather build it yourself, you can — you need [Node.js](https://nodejs.org):
+
+```bash
+cd notion-for-obsidian
+npm install
+npm run build
+```
+
+**Step 2 — find your vault's plugin folder.** Your vault is the folder your notes live
+in. Inside it there is a hidden `.obsidian` folder. You want:
+
+```
+<your vault>/.obsidian/plugins/notion-for-obsidian/
+```
+
+Create that folder if it doesn't exist. (On macOS, press `Cmd+Shift+.` in Finder to show
+hidden folders. On Windows, tick "Hidden items" in File Explorer's View tab.)
+
+**Step 3 — copy three files into it,** from the `notion-for-obsidian` folder:
+
+```
+main.js
+manifest.json
+styles.css
+```
+
+Those three files are the entire plugin. Nothing else needs to be copied.
+
+**Step 4 — turn it on.** In Obsidian: `Settings → Community plugins`. If you see a
+"Restricted mode" banner, turn restricted mode off — it blocks all community plugins,
+not just this one. Then hit the reload icon next to "Installed plugins" and toggle
+**Notion for Obsidian** on.
+
+You should now see a database icon in the left ribbon.
+
+---
+
+## 3. Your first database, step by step
+
+**Step 1.** Make a new note. Call it anything — `Dashboard` works well.
+
+**Step 2.** In the body of the note, type `/database`.
+
+A menu appears as soon as you type the `/`. Pick **Database — new**.
+
+**Step 3.** Choose a starter. There are nine, including Task tracker, Projects, Goals,
+Habit log, Reading list, Expenses and People/CRM. Pick **Task tracker** for now — it
+comes with a Status property already set up, which is what makes a board work.
+
+Leave "Add a few example rows" ticked so you have something to look at.
+
+**Step 4.** Press **Create database**.
+
+Two things just happened:
+
+- A folder was created (`Databases/Tasks` by default), with three example notes in it.
+- A small block was inserted into your note:
+
+```notion-db
+database: Tasks
+view: board
+group: status
+```
+
+**Step 5.** Switch the note out of edit mode (`Cmd/Ctrl+E`, or click away from the block).
+
+You now have a working kanban board. Try these:
+
+- **Drag a card** between columns. Open the note behind that card and you'll see its
+  `status:` line has changed. That's the whole trick.
+- **Click "+ New"** at the bottom of a column. It creates a note already tagged with
+  that column's status.
+- **Click the "Board" button** in the toolbar and switch to Table. Now you can click
+  any cell and edit it in place.
+- **Type in the search box.** It filters across the title and every property.
+
+**Step 6.** Add a second view of the *same* data. Type `/database` again, pick
+**Database — view**, choose Tasks, and choose Calendar.
+
+You now have two live views of the same folder, both editable, both staying in sync.
+That is the thing Notion does that plain markdown doesn't.
+
+---
+
+## 4. The slash menu
+
+Type `/` anywhere in the editor. Type more letters to narrow it down, arrow keys to
+move, `Enter` to insert, `Esc` to dismiss.
+
+The `/` only triggers at the start of a line or after a space, so URLs (`https://`),
+dates (`2026/03/14`) and phrases like `and/or` are left alone.
+
+**Basic blocks** — Text, Heading 1/2/3, Bulleted list, Numbered list, To-do list,
+Toggle list, Quote, Divider, Code, Table, Columns
+
+**Callouts** — Callout, Tip, Warning, Danger, Success, Question
+
+**Databases** — Database (new), Database view, Add item, Chart from database
+
+**Inline** — Date (today), Date (tomorrow), Link to page, Embed page, Equation, Highlight
+
+You don't have to type the exact name. Every command has aliases, so `/kanban` finds the
+database view, `/graph` finds the chart, `/collapse` finds the toggle, and `/checkbox`
+finds the to-do.
+
+Want a different trigger character? Settings → Notion for Obsidian → Trigger character.
+
+---
+
+## 5. Database views
+
+A view is a fenced code block tagged `notion-db`. The only required line is `database:`.
+
+````markdown
+```notion-db
+database: Tasks
+view: board
+group: status
+```
+````
+
+### Every option
+
+| Key | What it does | Example |
+| --- | --- | --- |
+| `database` | Which database to show. Required. | `database: Tasks` |
+| `view` | `table`, `board`, `gallery`, `list` or `calendar`. Defaults to `table`. | `view: board` |
+| `group` | Board columns. Needs a select, multi-select or checkbox property. | `group: status` |
+| `date` | Which date property the calendar uses. | `date: due` |
+| `cover` | Which property holds the card image (gallery/board). | `cover: cover` |
+| `properties` | Which properties to show, in this order. | `properties: [status, due]` |
+| `filter` | Which rows to show. See below. | `filter: [Status is not Done]` |
+| `sort` | Row order. | `sort: due asc` |
+| `limit` | Show at most this many rows. | `limit: 10` |
+| `size` | Gallery card size: `small`, `medium`, `large`. | `size: large` |
+| `title` | A heading for this view. | `title: This week` |
+
+### The five views
+
+**Table** — a spreadsheet. Click any cell to edit it. Click a column header to sort or
+hide it.
+
+**Board** — kanban. Drag cards between columns to change the grouping property. Empty
+columns still show, so you can drag into them.
+
+**Gallery** — cards with cover images. Good for a reading list, recipes, or anything
+visual.
+
+**List** — a compact line per row. If the database has a checkbox property, it becomes a
+tickable to-do list.
+
+**Calendar** — a month grid. Hover a day and press `+` to create a row already dated to
+that day. Arrows move between months.
+
+---
+
+## 6. Filtering and sorting
+
+Filters are written the way you'd say them out loud.
+
+````markdown
+```notion-db
+database: Tasks
+view: table
+filter:
+  - Status is not Done
+  - Due is not empty
+  - Priority >= 3
+sort: due asc
+```
+````
+
+Multiple filters are combined with **and** by default. For **or**, nest them under `any`:
+
+````markdown
+```notion-db
+database: Tasks
+filter:
+  any:
+    - Status is Blocked
+    - Priority is Urgent
+```
+````
+
+**Operators you can use:**
+
+`is` · `is not` · `contains` · `does not contain` · `starts with` · `ends with` ·
+`is empty` · `is not empty` · `before` · `after` · `on or before` · `on or after` ·
+`>` · `>=` · `<` · `<=` · `=` · `!=`
+
+**Two useful tricks:**
+
+- `Due before today` — the word `today` works anywhere a date does, and re-evaluates
+  every time the view renders.
+- `Name contains report` — `Name` refers to the note's title, not a frontmatter key.
+
+**Sorting:** `sort: due asc`, `sort: -priority` (the minus means descending), or a list
+for tie-breaking:
+
+```
+sort:
+  - priority desc
+  - due asc
+```
+
+---
+
+## 7. Property types
+
+| Type | Stored as | Editing |
+| --- | --- | --- |
+| `text` | a string | click to type |
+| `number` | a number | click to type; formats as plain, percent or currency |
+| `select` | a string | click for a menu of options |
+| `multiselect` | a list | click to tick several |
+| `date` | `YYYY-MM-DD` | click for a date picker |
+| `checkbox` | `true` / `false` | click the box |
+| `url` / `email` / `phone` | a string | rendered clickable, pencil icon to edit |
+| `person` | a list of names | click to tick several |
+| `files` | a path or URL | used as the cover image in gallery and board |
+| `relation` | a list of note titles | click to link rows in another database |
+| `formula` | computed | read-only, see below |
+| `created` / `updated` | from the file itself | read-only |
+
+### Formulas
+
+Reference other properties in `{braces}` and use `+ - * / ( )`:
+
+```
+{Current} / {Target}
+({Revenue} - {Cost}) / {Revenue}
+{Hours} * 85
+```
+
+This is deliberately a small language. It does arithmetic and nothing else — it cannot
+run code, which is why it's safe to have it evaluate automatically on every render.
+Checkboxes count as `1` and `0`, and a reference to a property that doesn't exist counts
+as `0`. Division by zero gives an empty cell rather than an error.
+
+---
+
+## 8. Charts
+
+This is the piece Notion charges for. Here it's a code block.
+
+````markdown
+```notion-chart
+database: Tasks
+chart: donut
+group: status
+aggregate: count
+title: Where my tasks are
+```
+````
+
+| Key | What it does |
+| --- | --- |
+| `database` | Which database. Required. |
+| `group` | The property whose values become bars or slices. Required. |
+| `chart` | `column`, `bar`, `line`, `area`, `pie`, `donut`, `scatter`. Default `column`. |
+| `aggregate` | `count`, `sum`, `average`, `median`, `min`, `max`, `count_unique`, `percent_checked`. |
+| `value` | Which numeric property to aggregate. Not needed for `count`. |
+| `series` | Split into multiple coloured series by a second property. |
+| `stacked` | `true` to stack the series instead of placing them side by side. |
+| `filter` | Same syntax as a view's filter. |
+| `sort` | `value_desc` (default), `value`, `label` or `none`. |
+| `limit` | Only chart the top N groups. |
+| `height` | Chart height in pixels. Default 340. |
+| `legend` / `values` | `false` to hide the legend or the data labels. |
+
+**Some charts worth stealing:**
+
+Spending by category this year:
+
+````markdown
+```notion-chart
+database: Expenses
+chart: bar
+group: category
+value: amount
+aggregate: sum
+filter: [Date after 2026-01-01]
+sort: value_desc
+title: Where the money went
+```
+````
+
+Tasks completed per month, split by priority:
+
+````markdown
+```notion-chart
+database: Tasks
+chart: column
+group: due
+series: priority
+aggregate: count
+stacked: true
+filter: [Done is true]
+```
+````
+
+Habit consistency:
+
+````markdown
+```notion-chart
+database: Habit log
+chart: line
+group: date
+value: completed
+aggregate: percent_checked
+sort: label
+```
+````
+
+Charts re-draw whenever the underlying notes change, take their colours from your
+Obsidian theme, and are drawn as plain SVG — no chart library, nothing loaded from the
+internet. Hover any bar or slice for exact numbers.
+
+Grouping by a date buckets into months automatically, since a chart with one bar per day
+is unreadable.
+
+---
+
+## 9. Columns
+
+Markdown has no side-by-side syntax, so this adds one. Separate the columns with a line
+containing `===`:
+
+````markdown
+```notion-columns
+### Today
+- [ ] Ship the thing
+
+===
+
+### This week
+- [ ] Plan the next thing
+```
+````
+
+Each column is rendered as normal markdown, so links, embeds and even database views
+work inside one. Columns collapse to a single stack on narrow screens.
+
+---
+
+## 10. Coming from Notion
+
+**Export from Notion** as Markdown & CSV. You'll get a folder per database, with one
+`.md` file per row and the properties already in frontmatter — exactly the shape this
+plugin expects.
+
+**Import it:** Settings → Notion for Obsidian → **Import folder**. Point it at the
+exported folder. It reads every note's frontmatter, guesses a property type for each key
+it finds, and collects the distinct values of select properties into options.
+
+Then drop a view block into any note and you're running.
+
+**What carries over well:** properties, select options, dates, checkboxes, relations by
+title, page content, and nested pages.
+
+**What differs, honestly:**
+
+- **Formulas** are arithmetic only. Notion's `if()`, `dateBetween()` and string functions
+  aren't here.
+- **Rollups** don't exist yet. Relations link rows, but don't aggregate across them.
+- **Permissions, comments and sharing** are Notion-server features with no local
+  equivalent.
+- **Sub-items and dependencies** aren't modelled as first-class features.
+- **The block-level drag handle** isn't reproduced; Obsidian's editor is text-first.
+
+Everything else in this README works today.
+
+---
+
+## 11. Settings
+
+- **Slash command menu** — turn the `/` menu on or off.
+- **Trigger character** — use something other than `/`.
+- **Notion typography** — Notion-like heading sizes, line spacing and callout styling.
+- **Default folder** — where new databases get created. Default `Databases`.
+- **Compact rows** — tighter rows in table and list views.
+- **Import an existing folder** — turn any folder of notes into a database.
+- **Your databases** — copy a view block for any database, or remove a database
+  definition. Removing only forgets the schema; **your notes are never deleted**.
+
+---
+
+## 12. Troubleshooting
+
+**"No database called X"** — the name in `database:` must match the database name in
+settings, not the folder name. Settings → Notion for Obsidian lists them, and each has a
+"Copy view block" button that gets it right for you.
+
+**The block shows as raw text** — you're in edit mode. Press `Cmd/Ctrl+E`, or click
+outside the block; Obsidian renders code blocks in reading mode and in live preview when
+the cursor is elsewhere.
+
+**A board says it needs a group property** — boards group by a `select`, `multiselect` or
+`checkbox` property. Add one, then set `group: <property>`.
+
+**A property isn't showing** — check the `id` matches the frontmatter key exactly
+(case-sensitive). The key in the note is what's read; the property's `name` is only a
+label.
+
+**Changes not appearing** — run the command **Notion: Refresh all database views**.
+Views normally update themselves when files change.
+
+**Edits aren't saving** — the note is probably open in another pane with unsaved changes.
+Close the duplicate pane.
+
+---
+
+## 13. Developing
+
+```bash
+npm install
+npm run dev        # rebuild on save
+npm run build      # typecheck, then a production bundle
+npm test           # run the logic test suite
+npm run typecheck  # types only
+```
+
+For live development, symlink the project folder into
+`<vault>/.obsidian/plugins/notion-for-obsidian` so `npm run dev` rebuilds straight into
+your vault. The [Hot Reload plugin](https://github.com/pjeby/hot-reload) will then pick
+up each rebuild without restarting Obsidian.
+
+### How the code is laid out
+
+```
+src/
+  main.ts            plugin entry: code blocks, commands, settings, lifecycle
+  types.ts           the data model
+  settings.ts        settings tab
+  db/
+    store.ts         schemas; folder-of-notes <-> rows; all frontmatter writes
+    query.ts         filtering, sorting, grouping
+    value.ts         property coercion, formatting, comparison, formulas
+  views/
+    renderer.ts      toolbar, search, dispatch to a view
+    table.ts board.ts gallery.ts list.ts calendar.ts
+    cells.ts         the editable cell widgets
+    config.ts        parses ```notion-db and ```notion-chart blocks
+    columns.ts       the ```notion-columns block
+  charts/
+    aggregate.ts     rows -> chart data
+    svg.ts           chart data -> inline SVG
+  slash/
+    commands.ts      the command catalogue and its matching
+    suggest.ts       the / menu itself
+  ui/
+    modals.ts        create database, insert view, insert chart, import folder
+    templates.ts     the nine starter databases
+tests/
+  logic.test.ts      33 tests over the pure engine parts
+```
+
+The tests cover the parts that don't need a running Obsidian: value coercion, the filter
+and sort engine, grouping, chart aggregation, block config parsing, formulas and date
+handling. `tests/obsidian-stub.ts` stands in for the Obsidian API so they run in plain
+Node.
+
+## License
+
+MIT
