@@ -10,6 +10,10 @@ I'm particularly interested in roles involving:
 
 Currently involved with the **National Cyber Resilience Centre Group** through the **Cyber PATH** programme.
 
+📂 **[See what I'm building →](https://navysum-site.ataidecraig.workers.dev)** — project pages with live demos on sample data, a map of my homelab, and write-ups on how each one was built.
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-navysum-07182d?style=for-the-badge&logo=astro&logoColor=c5e0ff)](https://navysum-site.ataidecraig.workers.dev)
+
 ---
 
 ## 👨‍💻 About Me
@@ -165,5 +169,6 @@ StreakMates supports private and shared habits, groups, realtime activity, leade
 
 # 🤝 Connect
 
+[![Portfolio](https://img.shields.io/badge/Portfolio-navysum-07182d?style=for-the-badge&logo=astro&logoColor=c5e0ff)](https://navysum-site.ataidecraig.workers.dev)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Craig_Ataide-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/craigataide/)
 [![GitHub](https://img.shields.io/badge/GitHub-navysum-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/navysum)
