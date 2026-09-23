@@ -61,7 +61,7 @@ StreakMates supports private and shared habits, groups, realtime activity, leade
 | Project | Description | Technologies |
 |---|---|---|
 | [**StreakMates**](https://github.com/navysum/StreakMates) | Social habit tracking and accountability platform | React Native · Expo · TypeScript · Supabase · PostgreSQL |
-| **LifeOS** 🔒 | Personal dashboard connecting tasks, habits, finance, health and system data | React · TypeScript · Python · APIs |
+| **Life Operating System** 🔒 | Personal dashboard and iPhone app (with home-screen widgets) for tasks, calendar, habits, food, health, finance and system data, backed by an Obsidian vault | React · TypeScript · Capacitor · Python · SwiftUI widgets |
 | [**Hermes Agent Infrastructure**](https://github.com/navysum/hermes-agent-infrastructure) | Infrastructure for persistent AI agents, automation and research workflows | Python · Linux · Docker · APIs |
 | **Trading Research** 🔒 | Backtesting, strategy analysis and quantitative research tooling | Python · Pandas · NumPy |
 
