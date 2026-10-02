@@ -27,7 +27,7 @@ Currently involved with the **National Cyber Resilience Centre Group** through t
 
 ---
 
-# ⭐ Featured Project
+# ⭐ Featured Projects
 
 ## [StreakMates](https://github.com/navysum/StreakMates)
 
@@ -54,6 +54,25 @@ StreakMates supports private and shared habits, groups, realtime activity, leade
 
 [View the code →](https://github.com/navysum/StreakMates)
 
+## Parables 🔒
+
+**One saying a day, your own reflection, a quiet journaling practice.**
+
+**React Native · Expo · TypeScript · Supabase · SwiftUI · WidgetKit**
+
+Parables offers one saying a day from a library of 689 across seventeen traditions (Zen, Stoic, Taoist, Celtic, African and more). You write what it means to you before seeing the traditional meaning, and it's kept in a private journal. Runs on **iOS, Android, Web and Apple Watch**, in English, French and Spanish.
+
+### Engineering highlights
+
+- 📴 Offline-first: everything saves on the device immediately, with optional account sync
+- 🔑 Passwordless sign-in with emailed one-time codes (Supabase)
+- 🔒 Journal lock with Face ID, Touch ID or passcode
+- 📱 iPhone Home Screen and Lock Screen widgets (WidgetKit) plus Android widgets
+- ⌚ Standalone Apple Watch app in SwiftUI that syncs reflections back to the phone without losing words
+- 🌍 Fully localised in three languages, including all 689 sayings
+- 🧪 Fuzz tests (damaged data, 13 time zones, sync) and Playwright end-to-end stress tests
+- 🚀 CI builds for TestFlight, iOS and Android via EAS and GitHub Actions
+
 ---
 
 # 🚀 Current Projects
@@ -61,6 +80,7 @@ StreakMates supports private and shared habits, groups, realtime activity, leade
 | Project | Description | Technologies |
 |---|---|---|
 | [**StreakMates**](https://github.com/navysum/StreakMates) | Social habit tracking and accountability platform | React Native · Expo · TypeScript · Supabase · PostgreSQL |
+| **Parables** 🔒 | A daily saying to reflect on and journal about, with widgets and an Apple Watch app | React Native · Expo · TypeScript · Supabase · SwiftUI |
 | **Life Operating System** 🔒 | Personal dashboard and iPhone app (with home-screen widgets) for tasks, calendar, habits, food, health, finance and system data, backed by an Obsidian vault | React · TypeScript · Capacitor · Python · SwiftUI widgets |
 | [**Hermes Agent Infrastructure**](https://github.com/navysum/hermes-agent-infrastructure) | Infrastructure for persistent AI agents, automation and research workflows | Python · Linux · Docker · APIs |
 | **Trading Research** 🔒 | Backtesting, strategy analysis and quantitative research tooling | Python · Pandas · NumPy |
